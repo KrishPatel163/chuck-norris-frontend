@@ -8,7 +8,7 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState("");
 
   const getJokes = async () => {
-    let apiUrl = "http://localhost:3000/api/jokes";
+    let apiUrl = "/api/jokes";
     if (selectedCategory) {
       apiUrl += `?category=${selectedCategory}`;
     }
