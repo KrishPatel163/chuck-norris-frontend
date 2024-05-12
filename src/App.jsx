@@ -16,20 +16,20 @@ function App() {
       const response = await axios.get(apiUrl);
       setJokesData(response.data.joke);
       setCategories(response.data.categories);
-      console.log(categories);
+      // console.log(categories);
     } catch (error) {
       console.error("Error fetching jokes:", error);
     }
   };
 
   useEffect(() => {
-    console.log("App component rendered");
+    // console.log("App component rendered");
     getJokes();
   }, [selectedCategory]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(selectedCategory)
+    // console.log(selectedCategory)
     getJokes();
   };
 
