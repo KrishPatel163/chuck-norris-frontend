@@ -8,7 +8,7 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState("");
 
   const getJokes = async () => {
-    let apiUrl = "/api/jokes";
+    let apiUrl = "https://chuck-norris-backend-1.onrender.com/api/jokes";
     if (selectedCategory) {
       apiUrl += `?category=${selectedCategory}`;
     }
