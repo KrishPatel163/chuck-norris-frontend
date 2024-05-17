@@ -84,7 +84,7 @@ function App() {
               <h3>
                 Category of the joke:{" "}
                 <span className="font-bold text-xl">
-                  {joke.categories == "" ? "randomle fetched" : joke.categories}
+                  {joke.categories == "" ? "randomly fetched" : joke.categories}
                 </span>
               </h3>
             </div>
