@@ -3,39 +3,40 @@ import axios from "axios";
 import "./App.css";
 
 function App() {
-  const [jokesData, setJokesData] = useState({});
+  const [joke, setJoke] = useState({});
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
 
   const getJokes = async () => {
-    let apiUrl = "https://chuck-norris-backend-1.onrender.com/api/jokes";
+    let apiUrl = "https://api.chucknorris.io/jokes/random";
     if (selectedCategory) {
       apiUrl += `?category=${selectedCategory}`;
     }
     try {
-      const response = await axios.get(apiUrl);
-      setJokesData(response.data.joke);
-      setCategories(response.data.categories);
-      // console.log(categories);
+      const jokeResponse = await axios.get(apiUrl);
+      const categoryResponse = await axios.get(
+        "https://api.chucknorris.io/jokes/categories"
+      );
+      setJoke(jokeResponse.data);
+      setCategories(categoryResponse.data);
     } catch (error) {
       console.error("Error fetching jokes:", error);
     }
   };
 
   useEffect(() => {
-    // console.log("App component rendered");
+    console.log("App component rendered");
     getJokes();
   }, [selectedCategory]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(selectedCategory)
+    // console.log(selectedCategory);
     getJokes();
   };
 
   return (
     <>
-      {/* <!-- Main container --> */}
       <div className="bg-black">
         {/* <!-- Flex container for centering items --> */}
         <div className="flex h-screen flex-col items-center justify-center">
@@ -46,9 +47,9 @@ function App() {
               <p className="text-xl text-black font-semibold">
                 Chuck Norris Joke is
               </p>
-              <p className="text-black">{jokesData.value}</p>
+              <p className="text-black">{joke.value}</p>
             </div>
-            {/* <!-- Get Joke -->// */}
+            {/* <!-- Get Joke --> */}
             <form className="w-full" onSubmit={handleSubmit}>
               <div className="mb-10 space-y-3">
                 <div className="space-y-1">
@@ -63,14 +64,11 @@ function App() {
                       className="text-black border-slate-400"
                       onChange={(e) => setSelectedCategory(e.target.value)}
                     >
-                      {categories.map((val, key) => {
-                        return (
-                          <option key={key} value={val}>
-                            {" "}
-                            {val}{" "}
-                          </option>
-                        );
-                      })}
+                      {categories.map((val, key) => (
+                        <option key={key} value={val}>
+                          {val}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>
@@ -83,7 +81,12 @@ function App() {
               </div>
             </form>
             <div className="text-center">
-              <h3>Category of the joke: <span className="font-bold text-xl">{jokesData.categories}</span></h3>
+              <h3>
+                Category of the joke:{" "}
+                <span className="font-bold text-xl">
+                  {joke.categories == "" ? "randomle fetched" : joke.categories}
+                </span>
+              </h3>
             </div>
           </div>
         </div>
